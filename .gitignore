@@ -2,3 +2,9 @@ node_modules/
 package-lock.json
 .DS_Store
 Thumbs.db
+
+# 本地专用：编辑台只在你电脑上运行，不发布到公开仓库
+admin.html
+serve.js
+启动编辑台.cmd
+test-editor.js

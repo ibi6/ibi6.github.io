@@ -96,6 +96,16 @@ a{color:inherit}
 .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .noscript-tip{max-width:640px;margin:120px auto;padding:24px;text-align:center;color:var(--text-dim)}
 
+/* 草稿角标（本地存在未发布草稿时出现） */
+.draft-badge{
+  position:fixed;left:20px;bottom:20px;z-index:85;
+  display:flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:999px;font-size:.82rem;
+  background:var(--bg-elev);border:1px solid rgba(245,158,11,.55);
+  color:var(--text);box-shadow:var(--shadow-lg);
+}
+.draft-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#f59e0b;box-shadow:0 0 10px #f59e0b}
+
 /* 滚动入场 */
 html.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0s)}
 html.js .reveal.visible{opacity:1;transform:none}
@@ -491,6 +501,19 @@ html.js .skill-card.visible .bar i{width:var(--w)}
   var doc = document, html = doc.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var D = window.PORTFOLIO_DATA;
+  var isDraft = false;
+
+  /* 编辑台的草稿优先显示（仅在你自己浏览器里生效） */
+  try {
+    var rawDraft = localStorage.getItem('portfolio-draft');
+    if (rawDraft) {
+      var parsedDraft = JSON.parse(rawDraft);
+      if (parsedDraft && parsedDraft.profile && parsedDraft.about) {
+        D = parsedDraft;
+        isDraft = true;
+      }
+    }
+  } catch (e) {}
 
   /* =========================================================
    *  ① 内容渲染：把 content.js 的数据写进页面
@@ -599,6 +622,14 @@ html.js .skill-card.visible .bar i{width:var(--w)}
     /* —— 页脚 —— */
     $('footerWrap').innerHTML = '© <span id="year"></span> ' + esc(P.firstName + ' ' + P.lastName) +
       ' · ' + esc(D.footer.note) + ' · 用 <span class="heart">❤</span> 与原生 HTML/CSS/JS 构建';
+
+    /* —— 草稿角标：提醒内容尚未发布（仅本机浏览器可见） —— */
+    if (isDraft) {
+      var badge = doc.createElement('div');
+      badge.className = 'draft-badge';
+      badge.textContent = '草稿预览中 · 尚未发布';
+      doc.body.appendChild(badge);
+    }
   }
   render();   /* 先渲染，再绑定交互（下面的观察器需要已经存在的 DOM） */
 

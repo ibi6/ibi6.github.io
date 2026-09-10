@@ -3,13 +3,10 @@
 单页个人作品集网站。零构建、零依赖，原生 HTML / CSS / JS。
 
 **线上地址：<https://ibi6.github.io/>**
-仓库：<https://github.com/ibi6/ibi6.github.io>
 
-## 改内容：只动一个文件
+## 改内容
 
-**所有文案都在 `content.js` 里**，不需要碰 HTML。
-
-打开 `content.js`，改完保存，刷新浏览器即可看到效果。
+所有文案都在 `content.js` 里，不需要碰 HTML。
 
 | 想改什么 | 改哪里 |
 |---------|--------|
@@ -21,6 +18,12 @@
 | 工作/教育时间线 | `timeline.items` |
 | 邮箱、社交链接 | `contact` + `profile.email` |
 | 页脚署名 | `footer.note` |
+
+改完保存，双击 `index.html` 看效果，满意后推送上线：
+
+```bash
+git add -A && git commit -m "更新内容" && git push
+```
 
 ### 常见改动示例
 
@@ -57,19 +60,13 @@ paragraphs: [
 python -m http.server 8000   # 然后访问 http://localhost:8000
 ```
 
-## 部署到 GitHub Pages
-
-已经部署完成，日常只需推送：
-
-```bash
-git add -A && git commit -m "更新内容" && git push
-```
+## 部署
 
 仓库 `ibi6/ibi6.github.io` 是 GitHub Pages 的**根站点仓库**，推送 main 分支后约 1 分钟自动上线 <https://ibi6.github.io/>，无需再配置 Pages。
 
 ### 想在浏览器里改（手机也能改）
 
-GitHub 网页打开 <https://github.com/ibi6/ibi6.github.io/blob/main/content.js> → 右上角铅笔图标 → 改完点 **Commit changes** → 1 分钟后线上自动更新。这就是最省事的"后台"。
+GitHub 网页打开 <https://github.com/ibi6/ibi6.github.io/blob/main/content.js> → 右上角铅笔图标 → 改完点 **Commit changes** → 1 分钟后线上自动更新。
 
 ### 首次部署备忘（换账号/换仓库时参考）
 
@@ -84,14 +81,14 @@ gh repo create <用户名>.github.io --public --source=. --remote=origin --push
 
 ```
 index.html      页面结构 + 样式 + 交互逻辑（一般不用改）
-content.js      全部文案内容 ★ 只改这个
-test-smoke.js   渲染冒烟测试（node test-smoke.js）
+content.js      全部文案内容 ★ 改内容只动这个
+test-smoke.js   渲染测试
 docs/           设计文档
 ```
 
 ## 测试
 
 ```bash
-npm install jsdom     # 首次
-node test-smoke.js    # 21 项检查：内容渲染、图标、链接、页脚
+npm install jsdom        # 首次
+node test-smoke.js       # 21 项：内容渲染、图标、链接、页脚
 ```
