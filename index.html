@@ -503,7 +503,7 @@ html.js .skill-card.visible .bar i{width:var(--w)}
   var D = window.PORTFOLIO_DATA;
   var isDraft = false;
 
-  /* 编辑台的草稿优先显示（仅在你自己浏览器里生效） */
+  /* 本地草稿优先显示（仅本机浏览器里生效，不影响线上访客） */
   try {
     var rawDraft = localStorage.getItem('portfolio-draft');
     if (rawDraft) {
