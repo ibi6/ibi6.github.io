@@ -12,6 +12,7 @@ window.PORTFOLIO_DATA = {
     lastName: 'Chen',
     initials: 'AC',                     // 头像与导航 logo 显示的缩写
     siteTitle: 'Alex Chen · 全栈开发工程师',
+    siteUrl: 'https://ibi6.github.io/',  // 部署后的网址（用于分享卡片）
     role: '全栈开发工程师',
     kicker: '你好，我是 👋',
     summary: '6 年全栈开发经验，热爱把复杂问题变简单。目前在 TechNova 负责核心交易系统前端架构与性能优化。',
