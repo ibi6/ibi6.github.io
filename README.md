@@ -2,6 +2,9 @@
 
 单页个人作品集网站。零构建、零依赖，原生 HTML / CSS / JS。
 
+**线上地址：<https://ibi6.github.io/>**
+仓库：<https://github.com/ibi6/ibi6.github.io>
+
 ## 改内容：只动一个文件
 
 **所有文案都在 `content.js` 里**，不需要碰 HTML。
@@ -56,28 +59,26 @@ python -m http.server 8000   # 然后访问 http://localhost:8000
 
 ## 部署到 GitHub Pages
 
-```bash
-# 1. 在 github.com 新建仓库（例：my-portfolio），不要勾选 README
-# 2. 关联并推送
-git remote add origin https://github.com/<你的用户名>/my-portfolio.git
-git branch -M main
-git push -u origin main
-# 3. 仓库 Settings → Pages → Source 选 "Deploy from a branch"
-#    Branch 选 main，目录选 / (root)，Save
-```
-
-约 1 分钟后访问 `https://<你的用户名>.github.io/my-portfolio/`。
-
-之后改内容：
+已经部署完成，日常只需推送：
 
 ```bash
-# 改完 content.js
-git add content.js && git commit -m "更新项目经历" && git push
+git add -A && git commit -m "更新内容" && git push
 ```
+
+仓库 `ibi6/ibi6.github.io` 是 GitHub Pages 的**根站点仓库**，推送 main 分支后约 1 分钟自动上线 <https://ibi6.github.io/>，无需再配置 Pages。
 
 ### 想在浏览器里改（手机也能改）
 
-GitHub 网页打开仓库 → 点 `content.js` → 右上角铅笔图标 → 改完点 **Commit changes** → 1 分钟后线上自动更新。这就是最省事的"后台"。
+GitHub 网页打开 <https://github.com/ibi6/ibi6.github.io/blob/main/content.js> → 右上角铅笔图标 → 改完点 **Commit changes** → 1 分钟后线上自动更新。这就是最省事的"后台"。
+
+### 首次部署备忘（换账号/换仓库时参考）
+
+```bash
+gh auth login --web --git-protocol https
+gh repo create <用户名>.github.io --public --source=. --remote=origin --push
+# 若仓库名不是 <用户名>.github.io，需在 Settings → Pages 里手动开启：
+#   Source = Deploy from a branch，Branch = main，目录 = / (root)
+```
 
 ## 文件说明
 
