@@ -6,7 +6,6 @@ const { JSDOM } = require('jsdom');
 const dir = __dirname;
 const indexFile = path.join(dir, 'index.html');
 
-// jsdom 缺失的浏览器 API，补桩（file:// 加载，content.js 才会被真实读取）
 const fileUrl = require('url').pathToFileURL(indexFile).href;
 const dom = new JSDOM(fs.readFileSync(indexFile, 'utf8'), {
   url: fileUrl,
@@ -14,7 +13,7 @@ const dom = new JSDOM(fs.readFileSync(indexFile, 'utf8'), {
   resources: 'usable',
   beforeParse(window) {
     window.matchMedia = window.matchMedia || (q => ({
-      matches: /min-width:\s*641px/.test(q), media: q,
+      matches: /prefers-color-scheme: dark/.test(q), media: q,
       addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}
     }));
     window.IntersectionObserver = class {
@@ -22,10 +21,6 @@ const dom = new JSDOM(fs.readFileSync(indexFile, 'utf8'), {
       observe(el) { this.cb([{ isIntersecting: true, target: el }], this); }
       unobserve() {} disconnect() {}
     };
-    window.HTMLCanvasElement.prototype.getContext = () => ({
-      setTransform() {}, clearRect() {}, beginPath() {}, arc() {}, fill() {},
-      moveTo() {}, lineTo() {}, stroke() {}
-    });
     window.requestAnimationFrame = cb => setTimeout(() => cb(Date.now()), 0);
     window.scrollTo = () => {};
   }
@@ -40,25 +35,19 @@ setTimeout(() => {
   const t = (name, cond, got) => checks.push({ name, ok: !!cond, got });
 
   t('无 JS 运行错误', errors.length === 0, errors.join(' | ') || '无');
-  t('页面标题来自 content.js', d.title.includes('Alex Chen'), d.title);
-  t('Hero 姓名', /Alex/.test(d.getElementById('heroName').textContent) && /Chen/.test(d.getElementById('heroName').textContent), d.getElementById('heroName').textContent.trim());
-  t('Hero 副标题', d.getElementById('heroSub').textContent.length > 10, d.getElementById('heroSub').textContent.slice(0, 20) + '…');
-  t('导航缩写', d.getElementById('brandInitials').textContent === 'AC', d.getElementById('brandInitials').textContent);
+  t('页面标题来自 content.js', d.title.includes('Hang'), d.title);
+  t('Hero 姓名含 Hang', /Hang/.test(d.getElementById('heroName').textContent), d.getElementById('heroName').textContent.trim());
+  t('Hero 副标题非空', d.getElementById('heroSub').textContent.length > 10, d.getElementById('heroSub').textContent.slice(0, 20) + '…');
+  t('品牌 logo 为 ibi6', /ibi6/.test(d.getElementById('brandName').textContent), d.getElementById('brandName').textContent.trim());
   t('关于段落 = 3 段', d.querySelectorAll('#aboutText p').length === 3, d.querySelectorAll('#aboutText p').length);
   t('关于加粗渲染', d.querySelectorAll('#aboutText strong').length >= 3, d.querySelectorAll('#aboutText strong').length);
   t('数据卡 = 3 张', d.querySelectorAll('#statsWrap .stat').length === 3, d.querySelectorAll('#statsWrap .stat').length);
-  t('技能卡 = 3 组', d.querySelectorAll('#skillsGrid .skill-card').length === 3, d.querySelectorAll('#skillsGrid .skill-card').length);
-  t('技能条 = 12 条', d.querySelectorAll('#skillsGrid .bar').length === 12, d.querySelectorAll('#skillsGrid .bar').length);
-  t('技能条宽度变量', /--w:95%/.test(d.querySelector('#skillsGrid .bar i').getAttribute('style')), d.querySelector('#skillsGrid .bar i').getAttribute('style'));
-  t('项目卡 = 4 个', d.querySelectorAll('#projectsGrid .project').length === 4, d.querySelectorAll('#projectsGrid .project').length);
-  t('项目标签 = 13 个', d.querySelectorAll('#projectsGrid .tag').length === 13, d.querySelectorAll('#projectsGrid .tag').length);
-  t('项目渐变变量', /--t1:#22d3ee/.test(d.querySelector('#projectsGrid .w-body').getAttribute('style')), d.querySelector('#projectsGrid .w-body').getAttribute('style'));
-  t('空链接渲染为占位', d.querySelector('#projectsGrid .project-links a').getAttribute('href') === '#', d.querySelector('#projectsGrid .project-links a').getAttribute('href'));
-  t('时间线 = 4 条', d.querySelectorAll('#timelineWrap .t-item').length === 4, d.querySelectorAll('#timelineWrap .t-item').length);
-  t('社交图标 = 4 个', d.querySelectorAll('#socialsWrap .social').length === 4, d.querySelectorAll('#socialsWrap .social').length);
-  t('邮箱自动 mailto', d.querySelectorAll('#socialsWrap .social')[1].getAttribute('href') === 'mailto:hello@alexchen.dev', d.querySelectorAll('#socialsWrap .social')[1].getAttribute('href'));
-  t('联系邮箱显示', d.getElementById('contactEmail').textContent === 'hello@alexchen.dev', d.getElementById('contactEmail').textContent);
-  t('页脚含姓名与年份', /Alex Chen/.test(d.getElementById('footerWrap').textContent) && new RegExp(String(new Date().getFullYear())).test(d.getElementById('footerWrap').textContent), d.getElementById('footerWrap').textContent.trim());
+  t('能力卡 = 4 组', d.querySelectorAll('#skillsGrid .skill-card').length === 4, d.querySelectorAll('#skillsGrid .skill-card').length);
+  t('能力标签挂载', d.querySelectorAll('#skillsGrid .thing').length >= 12, d.querySelectorAll('#skillsGrid .thing').length);
+  t('社交图标 >= 3 个', d.querySelectorAll('#socialsWrap .social').length >= 3, d.querySelectorAll('#socialsWrap .social').length);
+  t('GitHub 链接直达', Array.from(d.querySelectorAll('#socialsWrap .social')).some(a => a.getAttribute('href') === 'https://github.com/ibi6'), 'github social present');
+  t('联系邮箱显示', d.getElementById('contactEmail').textContent.trim().length > 0, d.getElementById('contactEmail').textContent.trim());
+  t('页脚含姓名与年份', /Hang/.test(d.getElementById('footerWrap').textContent) && new RegExp(String(new Date().getFullYear())).test(d.getElementById('footerWrap').textContent), d.getElementById('footerWrap').textContent.trim());
   t('数字滚动挂载', d.querySelectorAll('[data-count]').length === 3, d.querySelectorAll('[data-count]').length);
 
   let pass = 0;

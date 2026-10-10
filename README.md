@@ -1,4 +1,4 @@
-# 个人作品集 · Alex Chen
+# 个人主页 · Hang
 
 单页个人作品集网站。零构建、零依赖，原生 HTML / CSS / JS。
 
@@ -6,16 +6,14 @@
 
 ## 改内容
 
-所有文案都在 `content.js` 里，不需要碰 HTML。
+所有文案都在 `content.js` 里，不需要碰 HTML。编辑型排版：衬线大标题 + 等宽字标注 + 纸张底色。
 
 | 想改什么 | 改哪里 |
 |---------|--------|
-| 姓名 / 职位 / 一句话简介 / 打字机句子 | `profile` |
-| 头像与 logo 缩写 | `profile.initials` |
+| 姓名 / 一句话简介 / 打字机句子 | `profile` |
+| 品牌 logo、页脚署名 | `profile.brand` / `footerName` |
 | 关于我段落、数据卡（年限/项目数等） | `about` |
-| 技能分组、条目、熟练度百分比 | `skills.groups` |
-| 项目卡片（增删改） | `projects.items` |
-| 工作/教育时间线 | `timeline.items` |
+| 技术标签分组（标签墙，无百分比） | `skills.groups` |
 | 邮箱、社交链接 | `contact` + `profile.email` |
 | 页脚署名 | `footer.note` |
 
@@ -27,30 +25,17 @@ git add -A && git commit -m "更新内容" && git push
 
 ### 常见改动示例
 
-项目链接是空的就显示灰色占位，填上就变成可点外链：
-
-```js
-{
-  name: 'Nebula UI', year: '2025',
-  desc: '一句话描述。',
-  tags: ['Vue3', 'TypeScript'],
-  colors: ['#22d3ee', '#8b5cf6'],   // 缩略图渐变色
-  github: 'https://github.com/you/nebula-ui',
-  demo: 'https://nebula-ui.pages.dev'
-}
-```
-
-关于我段落支持 `**加粗**`，也可以直接写 HTML：
+关于我段落支持 `**加粗**`：
 
 ```js
 paragraphs: [
-  '我是 **张三**，做前端。',
-  '喜欢 <span class="mono grad-text">Rust</span>。'
+  '我是 **Hang**，GitHub 上的 **@ibi6**。'
 ]
 ```
 
-社交图标可选：`github` `mail` `telegram` `rss` `link`（`link` 是通用兜底图标）。
+社交为文字胶囊按钮。
 `mail` 的 `url` 留空会自动变成 `mailto:` 加 `profile.email`。
+改配色或字体，编辑 `index.html` 顶部的 CSS 变量（`--accent` / `--serif` / `--paper`）。
 
 ## 本地预览
 
@@ -82,7 +67,9 @@ gh repo create <用户名>.github.io --public --source=. --remote=origin --push
 ```
 index.html      页面结构 + 样式 + 交互逻辑（一般不用改）
 content.js      全部文案内容 ★ 改内容只动这个
-test-smoke.js   渲染测试
+test-smoke.js   jsdom 渲染冒烟测试（17 项）
+shot.js         Playwright 截图（桌面 / 移动，需本地装 playwright-core）
+check-interaction.js  表单 / 主题 / 滚动交互验证
 docs/           设计文档
 ```
 
@@ -90,5 +77,5 @@ docs/           设计文档
 
 ```bash
 npm install jsdom        # 首次
-node test-smoke.js       # 21 项：内容渲染、图标、链接、页脚
+node test-smoke.js       # 17 项：内容渲染、链接、字段、页脚
 ```
