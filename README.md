@@ -1,12 +1,13 @@
 # 个人主页 · Hang
 
-单页个人作品集网站。零构建、零依赖，原生 HTML / CSS / JS（Google Fonts CDN）。
+单页个人知识 Hub。零构建、零依赖，原生 HTML / CSS / JS（Google Fonts CDN）。
 
 **线上地址：<https://ibi6.github.io/>**
 
 ## 风格
 
-暗色沉浸式：粒子/光晕 Hero、滚动进度条、横向 snap 项目画廊（光斑跟随）、可拖推荐胶囊轨道。
+Material / 文档站气质：Inter + JetBrains Mono、indigo 主色、浅色默认 / 深色 slate、顶栏 + 侧栏、窄栏纵向滚动。  
+**已去掉** fullpage 整页分镜与霓虹粒子那套。
 
 ## 改内容
 

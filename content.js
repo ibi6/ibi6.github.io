@@ -9,21 +9,60 @@ window.PORTFOLIO_DATA = {
   /* ---------- 基本信息（Hero + 页脚 + 标题） ---------- */
   profile: {
     firstName: 'Hang',
-    lastName: '',                       // 留空则 Hero 只显示 firstName
+    lastName: '',
     brand: 'ibi6',
     siteTitle: 'Hang · 独立开发者',
     kicker: '独立开发者 / 开源与工具作者',
     role: '独立开发者',
     summary: '喜欢把重复的、繁琐的事情做成好用的工具。专注桌面应用、安全与运维小工具、开源作品，追求轻量、可维护、真正可用。',
+    motto: '小而可靠 · 把繁琐做成工具',
+    welcome: 'Welcome to my hub! 👋',
     typing: [
       '开源作品',
       '安全与运维工具',
       '桌面应用',
       '零依赖小工具'
     ],
-    email: '',                          // 暂不公开邮箱，联系以 GitHub 为主
-    footerName: 'Hang'
+    email: '',
+    footerName: 'Hang',
+    github: 'https://github.com/ibi6'
   },
+
+  /* ---------- 首页分类磁贴（Hub） ---------- */
+  hubCategories: [
+    {
+      icon: '📦',
+      title: '我的项目',
+      desc: '桌面工具、运维巡检、安全自查与可交互学习页——挑几件体面的摆在这里。',
+      href: '#projects',
+      linkLabel: '浏览项目',
+      tags: ['开源', '桌面', '运维']
+    },
+    {
+      icon: '🛠️',
+      title: '技术栈',
+      desc: '日常最常碰的语言、桌面与后端工具，按使用频率粗略分组。',
+      href: '#skills',
+      linkLabel: '查看能力',
+      tags: ['Python', 'TypeScript', 'Tauri']
+    },
+    {
+      icon: '📚',
+      title: '推荐阅读',
+      desc: '日常真正在用、或真心觉得值得安利的开源与工具。',
+      href: '#recommends',
+      linkLabel: '去看看',
+      tags: ['OSS', '效率', '开发']
+    },
+    {
+      icon: '✉️',
+      title: '联系交流',
+      desc: '开源、桌面工具、安全与运维小项目……有想法随时找我。',
+      href: '#contact',
+      linkLabel: '去 GitHub',
+      tags: ['GitHub', '反馈']
+    }
+  ],
 
   /* ---------- 关于我 ---------- */
   about: {
@@ -183,7 +222,7 @@ window.PORTFOLIO_DATA = {
   /* ---------- 联系方式 ---------- */
   contact: {
     desc: '想交流、合作，或者发现了 bug，都欢迎。',
-    heading: '聊聊技术，<em>一起做点东西</em>',
+    heading: '聊聊技术，一起做点东西',
     intro: '开源、桌面工具、安全与运维小项目……任何想法都欢迎。平时 GitHub 回复会比较及时。',
     socials: [
       { icon: 'github', label: 'GitHub', url: 'https://github.com/ibi6' },
@@ -192,5 +231,5 @@ window.PORTFOLIO_DATA = {
   },
 
   /* ---------- 页脚 ---------- */
-  footer: { note: '手工制作 · 原生 HTML / CSS / JS' }
+  footer: { note: '手工制作 · 原生 HTML / CSS / JS · Material Hub 风' }
 };
