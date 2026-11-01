@@ -105,17 +105,19 @@ window.PORTFOLIO_DATA = {
 
   /* ---------- 我的项目 ---------- */
   projects: {
-    desc: '挑选一些体面、可公开聊的作品。Private 仓库对访客可能 404，主人登录后可开。',
+    desc: '只展示公开仓库；私有项目不会出现在这里。',
     items: [
       {
         name: 'ui-components-oss',
-        tagline: '纯前端动态 UI 组件集，零构建可预览。',
+        tagline: '纯前端动态 UI 组件集，零依赖可预览。',
         tags: ['UI', '前端', '组件'],
         github: 'https://github.com/ibi6/ui-components-oss',
         homepage: 'https://ibi6.github.io/ui-components-oss/',
         featured: true,
         visibility: 'public'
-      },
+      }
+    ]
+  },
       {
         name: 'MatrixHunter',
         tagline: 'Windows 桌面授权检查台，内置白名单工具引导。',
@@ -178,8 +180,6 @@ window.PORTFOLIO_DATA = {
   /* ---------- 推荐项目 ---------- */
   recommends: {
     desc: '日常真正在用或真心觉得值得安利的开源。',
-    note: '部分灵感来自收藏站 open-source-treasure',
-    noteUrl: 'https://github.com/ibi6/open-source-treasure',
     items: [
       {
         name: 'Tauri',
