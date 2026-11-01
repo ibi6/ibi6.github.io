@@ -15,14 +15,15 @@ window.PORTFOLIO_DATA = {
     kicker: '独立开发者 / 开源与工具作者',
     role: '独立开发者',
     summary: '喜欢把重复的、繁琐的事情做成好用的工具。专注桌面应用、安全与运维小工具、开源作品，追求轻量、可维护、真正可用。',
-    motto: '小而可靠 · 把繁琐做成工具',
+    motto: '做一点小而可靠的东西，顺便把日常省下来。',
     welcome: 'Welcome to my hub! 👋',
     typing: [
-      '开源作品',
-      '安全与运维工具',
-      '桌面应用',
-      '零依赖小工具'
+      'A Tool Builder!',
+      'Desktop & OSS',
+      '安全与运维小工具',
+      '零依赖也能跑'
     ],
+    avatar: 'https://avatars.githubusercontent.com/u/195998689?v=4',
     email: '',
     footerName: 'Hang',
     github: 'https://github.com/ibi6'
@@ -31,36 +32,36 @@ window.PORTFOLIO_DATA = {
   /* ---------- 首页分类磁贴（Hub） ---------- */
   hubCategories: [
     {
-      icon: '📦',
-      title: '我的项目',
-      desc: '桌面工具、运维巡检、安全自查与可交互学习页——挑几件体面的摆在这里。',
+      icon: '🖥️',
+      title: '桌面工具',
+      desc: 'Tauri / Python 本地桌面应用，把重复操作收成一键。',
       href: '#projects',
-      linkLabel: '浏览项目',
-      tags: ['开源', '桌面', '运维']
+      linkLabel: '看项目',
+      tags: ['Tauri', '桌面', '本地']
     },
     {
-      icon: '🛠️',
-      title: '技术栈',
-      desc: '日常最常碰的语言、桌面与后端工具，按使用频率粗略分组。',
-      href: '#skills',
-      linkLabel: '查看能力',
-      tags: ['Python', 'TypeScript', 'Tauri']
+      icon: '🧩',
+      title: 'Web 与组件',
+      desc: '纯前端组件、可视化与可交互学习页，零构建也能预览。',
+      href: '#projects',
+      linkLabel: '逛逛',
+      tags: ['前端', '组件', 'Pages']
     },
     {
-      icon: '📚',
-      title: '推荐阅读',
-      desc: '日常真正在用、或真心觉得值得安利的开源与工具。',
+      icon: '🛡️',
+      title: '安全运维',
+      desc: '巡检、自查、诊断类小工具——偏实用，少折腾。',
+      href: '#projects',
+      linkLabel: '打开',
+      tags: ['运维', '安全', 'CLI']
+    },
+    {
+      icon: '✨',
+      title: '开源实验',
+      desc: '收藏与实验向作品：信号花园、代码城市、OSS 导航。',
       href: '#recommends',
       linkLabel: '去看看',
-      tags: ['OSS', '效率', '开发']
-    },
-    {
-      icon: '✉️',
-      title: '联系交流',
-      desc: '开源、桌面工具、安全与运维小项目……有想法随时找我。',
-      href: '#contact',
-      linkLabel: '去 GitHub',
-      tags: ['GitHub', '反馈']
+      tags: ['实验', '可视化', 'OSS']
     }
   ],
 
