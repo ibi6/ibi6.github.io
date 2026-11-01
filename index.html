@@ -5,25 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Hang · 开源与工具" />
   <title>Hang</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
   <script>
     (function () {
       try {
-        var VER = 'tone-2';
-        if (localStorage.getItem('ibi6-theme-ver') !== VER) {
-          localStorage.setItem('ibi6-theme-ver', VER);
+        // 旧浅色偏好清一次，之后跟随开关
+        if (localStorage.getItem('ibi6-theme-ver') !== 'tone-4') {
+          localStorage.setItem('ibi6-theme-ver', 'tone-4');
           localStorage.setItem('ibi6-theme', 'dark');
         }
-        var t = localStorage.getItem('ibi6-theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
+        var mode = localStorage.getItem('ibi6-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', mode);
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
   </script>
+  <style id="critical-theme">
+    html, body { background: #12141a !important; color: #e4e6ef; }
+    html[data-theme="light"], html[data-theme="light"] body {
+      background: #e8e9ef !important; color: #2a2d3a;
+    }
+  </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" />
-  <link rel="stylesheet" href="./vendor/ui-kit.css?v=tone2" />
-  <link rel="stylesheet" href="./vendor/gallery-dynamics.css?v=tone2" />
+  <link rel="stylesheet" href="./vendor/ui-kit.v4.css" />
+  <link rel="stylesheet" href="./vendor/gallery-dynamics.v4.css" />
   <style>
     :root {
       --primary: var(--uic-primary);
@@ -828,9 +836,9 @@
   </div>
 
 
-  <script src="./vendor/ui-kit.js?v=tone2"></script>
-  <script src="./vendor/gallery-dynamics.js?v=tone2"></script>
-  <script src="./content.js"></script>
+  <script src="./vendor/ui-kit.v4.js"></script>
+  <script src="./vendor/gallery-dynamics.v4.js"></script>
+  <script src="./content.v4.js"></script>
   <script>
   (function () {
     const D = window.PORTFOLIO_DATA;
