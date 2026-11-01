@@ -1,4 +1,4 @@
-/* 冒烟测试：用 jsdom 加载 index.html，验证 content.js 渲染结果 */
+/* 冒烟测试：用 jsdom 加载 index.html，验证 content.js 渲染 + 分镜 DOM */
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
@@ -18,12 +18,14 @@ const dom = new JSDOM(fs.readFileSync(indexFile, 'utf8'), {
     }));
     window.IntersectionObserver = class {
       constructor(cb) { this.cb = cb; }
-      observe(el) { this.cb([{ isIntersecting: true, target: el }], this); }
+      observe(el) { this.cb([{ isIntersecting: true, target: el, intersectionRatio: 1 }], this); }
       unobserve() {} disconnect() {}
     };
     window.requestAnimationFrame = cb => setTimeout(() => cb(Date.now()), 0);
+    window.cancelAnimationFrame = id => clearTimeout(id);
     window.scrollTo = () => {};
-    // canvas stub for particle hero
+    window.HTMLElement.prototype.scrollIntoView = function () {};
+    window.HTMLElement.prototype.scrollBy = function () {};
     const _getContext = window.HTMLCanvasElement && window.HTMLCanvasElement.prototype.getContext;
     if (window.HTMLCanvasElement) {
       window.HTMLCanvasElement.prototype.getContext = function (type) {
@@ -73,6 +75,14 @@ setTimeout(() => {
   t('滚动进度条', !!d.getElementById('scrollProgress'), 'progress present');
   t('.nojekyll 存在', fs.existsSync(path.join(dir, '.nojekyll')), 'yes');
 
+  // fullpage-specific
+  t('分镜轨道存在', !!d.getElementById('fpTrack') && !!d.getElementById('fpViewport'), 'fp shell');
+  const panels = d.querySelectorAll('.fp-panel');
+  t('分镜屏数 5–7', panels.length >= 5 && panels.length <= 7, panels.length);
+  t('分镜含关键五屏', ['top','about','projects','recommends','contact'].every(id => !!d.getElementById(id)), 'core panels');
+  t('侧边指示点已生成', d.querySelectorAll('#sectionDots a').length === panels.length, d.querySelectorAll('#sectionDots a').length);
+  t('桌面锁定滚动类', d.documentElement.classList.contains('fp-lock'), d.documentElement.className);
+
   let pass = 0;
   for (const c of checks) {
     console.log((c.ok ? 'PASS  ' : 'FAIL  ') + c.name + '  →  ' + c.got);
@@ -80,4 +90,4 @@ setTimeout(() => {
   }
   console.log('\n结果: ' + pass + '/' + checks.length + ' 通过');
   process.exit(pass === checks.length ? 0 : 1);
-}, 800);
+}, 900);
