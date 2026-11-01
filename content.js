@@ -35,7 +35,7 @@ window.PORTFOLIO_DATA = {
       icon: '🖥️',
       title: '桌面工具',
       desc: 'Tauri / Python 本地桌面应用，把重复操作收成一键。',
-      href: '#projects',
+      href: '#/projects',
       linkLabel: '看项目',
       tags: ['Tauri', '桌面', '本地']
     },
@@ -43,15 +43,15 @@ window.PORTFOLIO_DATA = {
       icon: '🧩',
       title: 'Web 与组件',
       desc: '纯前端组件、可视化与可交互学习页，零构建也能预览。',
-      href: '#projects',
-      linkLabel: '逛逛',
+      href: '#/lab',
+      linkLabel: '去玩',
       tags: ['前端', '组件', 'Pages']
     },
     {
       icon: '🛡️',
       title: '安全运维',
       desc: '巡检、自查、诊断类小工具——偏实用，少折腾。',
-      href: '#projects',
+      href: '#/projects',
       linkLabel: '打开',
       tags: ['运维', '安全', 'CLI']
     },
@@ -59,11 +59,23 @@ window.PORTFOLIO_DATA = {
       icon: '✨',
       title: '开源实验',
       desc: '收藏与实验向作品：信号花园、代码城市、OSS 导航。',
-      href: '#recommends',
+      href: '#/recommends',
       linkLabel: '去看看',
       tags: ['实验', '可视化', 'OSS']
     }
   ],
+
+  /* ---------- 组件实验室 / Live UI ---------- */
+  lab: {
+    title: '组件实验室',
+    badge: 'Live UI',
+    desc: '从 ui-components-oss 精简移植的可交互演示——移动鼠标、点击、拖动，每个都能玩。',
+    libraryUrl: 'https://ibi6.github.io/ui-components-oss/',
+    libraryLabel: '打开完整图鉴 ↗',
+    tiltTitle: '晨光计划',
+    tiltDesc: '每天 10 分钟，让习惯慢慢长出来。',
+    marquee: ['React', 'Vue', 'Svelte', 'CSS 动画', 'SVG', 'Canvas', 'WebGL', 'Tailwind', 'Tauri', 'Python']
+  },
 
   /* ---------- 关于我 ---------- */
   about: {
@@ -232,5 +244,5 @@ window.PORTFOLIO_DATA = {
   },
 
   /* ---------- 页脚 ---------- */
-  footer: { note: '手工制作 · 原生 HTML / CSS / JS · Material Hub 风' }
+  footer: { note: '手工制作 · 原生 HTML / CSS / JS · SPA 多视图 · Live UI' }
 };

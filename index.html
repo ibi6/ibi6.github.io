@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="./vendor/ui-kit.css" />
+  <link rel="stylesheet" href="./vendor/gallery-dynamics.css" />
   <style>
     :root {
       --primary: var(--uic-primary);
@@ -491,6 +492,80 @@
     @media (max-width: 520px) {
       .search-chip .hint { display: none; }
     }
+  
+    /* ========== SPA 多视图切换（非锚点长滚） ========== */
+    html, body { height: 100%; }
+    body {
+      display: flex; flex-direction: column; min-height: 100%;
+      overflow: hidden;
+    }
+    .site-header, .tabs-bar { flex: none; }
+    .shell {
+      flex: 1 1 auto; min-height: 0;
+      overflow: hidden;
+    }
+    .sidebar {
+      height: auto !important;
+      max-height: 100%;
+      overflow: auto;
+      position: sticky; top: 0;
+    }
+    .main {
+      min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column;
+      padding-bottom: 0;
+    }
+    .views {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .view {
+      position: absolute; inset: 0;
+      overflow: auto;
+      padding: 0 0 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity .28s ease, transform .28s ease, visibility .28s;
+    }
+    .view.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: none;
+    }
+    .view-inner { max-width: var(--content-max); }
+    .site-footer { flex: none; }
+    #lab { scroll-margin-top: 0; }
+    .section { margin-top: 1.5rem; }
+    .hub-cats-title { margin: 1.2rem 0 .7rem; font-size: 1rem; font-weight: 700; }
+    .view-kicker {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .72rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--primary);
+      margin: .2rem 0 .55rem;
+    }
+    @media (max-width: 960px) {
+      body { overflow: auto; }
+      .shell { overflow: visible; }
+      .main { overflow: visible; }
+      .views { position: relative; overflow: visible; min-height: 60vh; }
+      .view {
+        position: relative; inset: auto;
+        display: none;
+        transform: none;
+        opacity: 1; visibility: visible; pointer-events: auto;
+        padding-bottom: 2rem;
+      }
+      .view.active { display: block; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .view { transition: none; transform: none; }
+    }
+
   </style>
 </head>
 <body>
@@ -499,12 +574,12 @@
       <button class="icon-btn menu-toggle" id="menuBtn" aria-label="打开导航" type="button" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
       </button>
-      <a class="brand" href="#top">
+      <a class="brand" href="#/home" data-route="home">
         <span class="brand-mark" aria-hidden="true">i6</span>
         <span id="brandName">ibi6</span>
       </a>
       <div class="header-spacer"></div>
-      <button class="search-chip" id="searchChip" type="button" title="跳到项目（Ctrl+K）" aria-label="查找项目">
+      <button class="search-chip" id="searchChip" type="button" title="打开项目视图（Ctrl+K）" aria-label="查找项目">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <span class="label">查找</span>
         <span class="hint">Ctrl+K</span>
@@ -523,12 +598,11 @@
 
   <nav class="tabs-bar" aria-label="主导航">
     <div class="tabs-inner" id="navLinks">
-      <a href="#top" class="active" data-tab>首页</a>
-      <a href="#about" data-tab>关于</a>
-      <a href="#skills" data-tab>能力</a>
-      <a href="#projects" data-tab>项目</a>
-      <a href="#recommends" data-tab>推荐</a>
-      <a href="#contact" data-tab>联系</a>
+      <a href="#/home" data-route="home" class="active">首页</a>
+      <a href="#/lab" data-route="lab">组件</a>
+      <a href="#/projects" data-route="projects">项目</a>
+      <a href="#/recommends" data-route="recommends">推荐</a>
+      <a href="#/about" data-route="about">关于</a>
     </div>
   </nav>
 
@@ -537,77 +611,169 @@
   <div class="shell">
     <aside class="sidebar" id="sidebar" aria-label="侧栏导航">
       <h4>本站</h4>
-      <a href="#top" data-side>欢迎</a>
-      <a href="#categories" data-side>分类</a>
-      <a href="#about" data-side>关于</a>
+      <a href="#/home" data-route="home">欢迎</a>
+      <a href="#/lab" data-route="lab">组件实验室</a>
+      <a href="#/about" data-route="about">关于 · 联系</a>
       <h4>作品</h4>
-      <a href="#skills" data-side>技术能力</a>
-      <a href="#projects" data-side>我的项目</a>
-      <a href="#recommends" data-side>推荐阅读</a>
-      <h4>联系</h4>
-      <a href="#contact" data-side>聊聊</a>
+      <a href="#/projects" data-route="projects">我的项目</a>
+      <a href="#/recommends" data-route="recommends">推荐阅读</a>
+      <h4>外链</h4>
       <a href="https://github.com/ibi6" target="_blank" rel="noopener">GitHub ↗</a>
       <a href="https://ibi6.github.io/ui-components-oss/" target="_blank" rel="noopener">组件库 ↗</a>
     </aside>
 
     <main class="main">
-      <div class="home">
-        <section id="top" class="reveal">
-          <div class="hero-wrapper">
-            <div class="hero-content">
-              <p class="hero-title">Hi, I'm <span class="marker" id="heroName">Hang</span>.</p>
-              <p class="hero-intro" id="heroWelcome">Welcome to my hub! 👋</p>
-              <div class="typewriter-row">
-                <span id="typewriter"></span><span class="cursor" aria-hidden="true"></span>
+      <div class="views" id="views">
+        <!-- HOME -->
+        <section class="view active" id="view-home" data-view="home" aria-label="首页">
+          <div class="view-inner">
+            <div class="hero-wrapper" id="top">
+              <div class="hero-content">
+                <p class="hero-title">Hi, I'm <span class="marker" id="heroName">Hang</span>.</p>
+                <p class="hero-intro" id="heroWelcome">Welcome to my hub! 👋</p>
+                <div class="typewriter-row">
+                  <span id="typewriter"></span><span class="cursor" aria-hidden="true"></span>
+                </div>
+                <p class="hero-motto" id="heroSub"></p>
+                <div class="hero-btns" id="heroBtns"></div>
               </div>
-              <p class="hero-motto" id="heroSub"></p>
-              <div class="hero-btns" id="heroBtns"></div>
+              <div class="avatar-glow" id="avatarWrap" aria-hidden="true">
+                <div class="avatar-inner" id="avatarLetter">H</div>
+              </div>
             </div>
-            <div class="avatar-glow" id="avatarWrap" aria-hidden="true">
-              <div class="avatar-inner" id="avatarLetter">H</div>
-            </div>
+            <div class="hub-cats-title">逛逛分类</div>
+            <div class="grid-container" id="hubGrid"></div>
+            <div class="stats" id="statsWrap" style="margin-top:1.25rem"></div>
           </div>
         </section>
 
-        <section id="categories" class="reveal">
-          <div class="grid-container" id="hubGrid"></div>
-        </section>
+        <!-- LAB -->
+        <section class="view" id="view-lab" data-view="lab" aria-label="组件实验室">
+          <div class="view-inner">
+            <div class="view-kicker">Live UI · ui-components-oss</div>
 
-        <section id="about" class="section reveal">
-          <div class="section-head"><h2>关于我</h2></div>
-          <p class="section-desc" id="aboutDesc"></p>
-          <div class="about-text" id="aboutText"></div>
-          <div class="stats" id="statsWrap"></div>
-        </section>
+            <section class="uic-lab" id="lab" data-lab-root>
+              <div class="uic-lab-head">
+                <h2 id="labTitle">组件实验室</h2>
+                <span class="uic-lab-badge" id="labBadge">Live UI</span>
+              </div>
+              <p class="uic-lab-desc">
+                <span id="labDesc">从 ui-components-oss 精简移植的可交互演示。</span>
+                <a id="labLibraryLink" href="https://ibi6.github.io/ui-components-oss/" target="_blank" rel="noopener">打开完整图鉴 ↗</a>
+              </p>
+              <div class="uic-lab-grid" id="labGrid">
+                <div class="box wide" data-lab-demo="tilt">
+                  <h3>倾斜光斑卡片</h3>
+                  <div class="stage">
+                    <div class="tilt" id="labTilt">
+                      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="glow"></div>
+                      <div>
+                        <div class="tilt-title" id="labTiltTitle">晨光计划</div>
+                        <p class="tilt-desc" id="labTiltDesc">每天 10 分钟，让习惯慢慢长出来。</p>
+                      </div>
+                      <div class="days">
+                        <i class="on" style="--i:0"></i><i class="on" style="--i:1"></i><i class="on" style="--i:2"></i><i class="on" style="--i:3"></i><i class="on" style="--i:4"></i><i></i><i></i>
+                        <span>连续 5 天</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-        <section id="skills" class="section reveal">
-          <div class="section-head"><h2>技术能力</h2></div>
-          <p class="section-desc" id="skillsDesc"></p>
-          <div class="skills-grid" id="skillsGrid"></div>
-        </section>
+                <div class="box" data-lab-demo="buttons">
+                  <h3>流体按钮</h3>
+                  <div class="row">
+                    <button type="button" class="btn">开始使用</button>
+                    <button type="button" class="btn ghost">了解更多</button>
+                    <button type="button" class="btn" id="labSubmit"><span class="sp"></span><svg class="ck" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span id="labSubmitLabel">提交订单</span></button>
+                  </div>
+                  <p class="hint">悬停看流体填充，点击有涟漪；提交会走忙碌→完成态。</p>
+                </div>
 
-        <section id="projects" class="section reveal">
-          <div class="section-head">
-            <h2>我的项目</h2>
-            <div class="uic-filter" id="projectFilter" role="tablist" aria-label="项目筛选"></div>
+                <div class="box" data-lab-demo="toasts">
+                  <h3>Toast 通知</h3>
+                  <div class="row">
+                    <button type="button" class="btn" data-lab-toast="success" data-lab-toast-title="成功" data-lab-toast-msg="更改已保存">成功</button>
+                    <button type="button" class="btn ghost" data-lab-toast="warn" data-lab-toast-title="警告" data-lab-toast-msg="磁盘空间不足">警告</button>
+                    <button type="button" class="btn ghost" data-lab-toast="error" data-lab-toast-title="错误" data-lab-toast-msg="请求失败，请重试">错误</button>
+                  </div>
+                  <p class="hint">右下角弹入，点一下可立刻关掉。</p>
+                </div>
+
+                <div class="box" data-lab-demo="switch-tabs">
+                  <h3>Switch / Tabs</h3>
+                  <div class="sw-stack">
+                    <label class="sw"><span>消息通知</span><input type="checkbox" checked><span class="trk"></span></label>
+                    <label class="sw"><span>自动保存</span><input type="checkbox"><span class="trk"></span></label>
+                  </div>
+                  <div class="lab-tabs" id="labTabs" role="tablist">
+                    <span class="ind"></span>
+                    <button type="button" role="tab" aria-selected="true">概览</button>
+                    <button type="button" role="tab" aria-selected="false">活动</button>
+                    <button type="button" role="tab" aria-selected="false">设置</button>
+                  </div>
+                  <p class="pane" id="labPane"></p>
+                </div>
+
+                <div class="box" data-lab-demo="drawer">
+                  <h3>侧边抽屉</h3>
+                  <div class="row">
+                    <button type="button" class="btn" id="labOpenDrawer">打开抽屉</button>
+                    <button type="button" class="btn ghost" id="labOpenDrawerRight">右侧抽屉</button>
+                  </div>
+                  <p class="hint">遮罩点击或 Esc 关闭；与项目详情抽屉同一套气质。</p>
+                </div>
+
+                <div class="box" data-lab-demo="marquee">
+                  <h3>跑马灯</h3>
+                  <div class="mq" id="labMq"><div>
+                    <span>React</span><span>Vue</span><span>Svelte</span><span>CSS 动画</span><span>SVG</span><span>Canvas</span><span>WebGL</span><span>Tailwind</span>
+                  </div></div>
+                  <p class="hint">悬停暂停。标签来自 content.js → lab.marquee。</p>
+                </div>
+              </div>
+            </section>
+
           </div>
-          <p class="section-desc" id="projectsDesc"></p>
-          <div class="projects-grid" id="projectsGrid"></div>
         </section>
 
-        <h3 class="rec-title reveal"><span class="book" aria-hidden="true">📖</span> 推荐阅读</h3>
-
-        <section id="recommends" class="section reveal" style="margin-top:0">
-          <p class="section-desc" id="recommendsDesc"></p>
-          <div class="rec-list" id="recommendsList"></div>
-          <p class="rec-note" id="recommendsNote"></p>
+        <!-- PROJECTS -->
+        <section class="view" id="view-projects" data-view="projects" aria-label="我的项目">
+          <div class="view-inner">
+            <div class="section-head">
+              <h2>我的项目</h2>
+              <div class="uic-filter" id="projectFilter" role="tablist" aria-label="项目筛选"></div>
+            </div>
+            <p class="section-desc" id="projectsDesc"></p>
+            <div class="projects-grid" id="projectsGrid"></div>
+          </div>
         </section>
 
-        <section id="contact" class="section reveal">
-          <div class="contact-box">
-            <h2 id="contactHeading">聊聊技术</h2>
-            <p id="contactIntro"></p>
-            <div class="socials" id="socialsWrap"></div>
+        <!-- RECOMMENDS -->
+        <section class="view" id="view-recommends" data-view="recommends" aria-label="推荐阅读">
+          <div class="view-inner">
+            <h3 class="rec-title" style="margin-top:.4rem"><span class="book" aria-hidden="true">📖</span> 推荐阅读</h3>
+            <p class="section-desc" id="recommendsDesc"></p>
+            <div class="rec-list" id="recommendsList"></div>
+            <p class="rec-note" id="recommendsNote"></p>
+          </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="view" id="view-about" data-view="about" aria-label="关于与联系">
+          <div class="view-inner">
+            <div class="section-head"><h2>关于我</h2></div>
+            <p class="section-desc" id="aboutDesc"></p>
+            <div class="about-text" id="aboutText"></div>
+
+            <div class="section-head" style="margin-top:1.6rem"><h2>技术能力</h2></div>
+            <p class="section-desc" id="skillsDesc"></p>
+            <div class="skills-grid" id="skillsGrid"></div>
+
+            <div class="contact-box" style="margin-top:1.6rem">
+              <h2 id="contactHeading">聊聊技术</h2>
+              <p id="contactIntro"></p>
+              <div class="socials" id="socialsWrap"></div>
+            </div>
           </div>
         </section>
       </div>
@@ -616,13 +782,35 @@
 
   <footer class="site-footer" id="footerWrap"></footer>
 
+  <div class="uic-lab uic-lab-drawer-mask" id="labDrawerMask" hidden>
+    <aside class="uic-lab-drawer" role="dialog" aria-modal="true" aria-labelledby="labDrawerTitle">
+      <header class="uic-lab-drawer-hd">
+        <h3 id="labDrawerTitle">设置面板</h3>
+        <button type="button" class="uic-lab-drawer-x" aria-label="关闭">×</button>
+      </header>
+      <div class="uic-lab-drawer-bd">
+        <label class="sw"><span>桌面通知</span><input type="checkbox" checked><span class="trk"></span></label>
+        <label class="sw"><span>邮件摘要</span><input type="checkbox"><span class="trk"></span></label>
+        <label class="sw"><span>每周报告</span><input type="checkbox" checked><span class="trk"></span></label>
+        <p class="uic-lab-drawer-note">偏好仅作演示，刷新后重置。</p>
+      </div>
+      <footer class="uic-lab-drawer-ft">
+        <button type="button" class="btn ghost" data-lab-drawer-close>取消</button>
+        <button type="button" class="btn" data-lab-drawer-close>保存</button>
+      </footer>
+    </aside>
+  </div>
+
+
   <script src="./vendor/ui-kit.js"></script>
+  <script src="./vendor/gallery-dynamics.js"></script>
   <script src="./content.js"></script>
   <script>
   (function () {
     const D = window.PORTFOLIO_DATA;
     if (!D) return;
     const UIC = window.UIC || {};
+    const Gallery = window.UICGallery || {};
 
     const $ = (id) => document.getElementById(id);
     const md = (s) => String(s || '').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -634,6 +822,21 @@
     };
     const jumpIcon = '<svg class="jump" viewBox="0 0 24 24"><path d="M5 17.59L15.59 7H9V5h10v10h-2V8.41L6.41 19 5 17.59z"/></svg>';
 
+    const ROUTES = ['home', 'lab', 'projects', 'recommends', 'about'];
+    const CAT_ROUTE = {
+      '#projects': 'projects',
+      '#/projects': 'projects',
+      '#recommends': 'recommends',
+      '#/recommends': 'recommends',
+      '#lab': 'lab',
+      '#/lab': 'lab',
+      '#about': 'about',
+      '#/about': 'about',
+      '#top': 'home',
+      '#/home': 'home',
+      '#categories': 'home'
+    };
+
     const root = document.documentElement;
     function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
     function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
@@ -644,7 +847,6 @@
     const initialTheme = root.getAttribute('data-theme') || 'light';
     applyTheme(initialTheme);
 
-    /* UIC Switch for theme */
     if (UIC.Switch) {
       UIC.Switch($('themeSwitchHost'), {
         checked: initialTheme === 'dark',
@@ -656,39 +858,92 @@
       });
     }
 
-    /* mobile sidebar drawer (existing) */
+    /* mobile sidebar */
     const sidebar = $('sidebar');
     const overlay = $('drawerOverlay');
-    function closeDrawer() {
+    function closeNav() {
       sidebar.classList.remove('open');
       overlay.classList.remove('open');
       $('menuBtn').setAttribute('aria-expanded', 'false');
     }
-    function openNavDrawer() {
+    function openNav() {
       sidebar.classList.add('open');
       overlay.classList.add('open');
       $('menuBtn').setAttribute('aria-expanded', 'true');
     }
     $('menuBtn').addEventListener('click', () => {
-      if (sidebar.classList.contains('open')) closeDrawer(); else openNavDrawer();
+      if (sidebar.classList.contains('open')) closeNav(); else openNav();
     });
-    overlay.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
-    sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      if (window.matchMedia('(max-width: 960px)').matches) closeDrawer();
-    }));
+    overlay.addEventListener('click', closeNav);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 
-    function focusProjects() {
-      const el = $('projects');
-      if (!el) return;
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActive('projects');
+    function parseRoute() {
+      let h = (location.hash || '#/home').replace(/^#\/?/, '');
+      h = (h.split('?')[0] || 'home').split('/')[0];
+      if (h === '' || h === 'top' || h === 'categories') h = 'home';
+      if (h === 'contact' || h === 'skills') h = 'about';
+      if (ROUTES.indexOf(h) < 0) h = 'home';
+      return h;
     }
-    $('searchChip').addEventListener('click', focusProjects);
+
+    function setActiveNav(route) {
+      document.querySelectorAll('[data-route]').forEach(a => {
+        const r = a.getAttribute('data-route');
+        a.classList.toggle('active', r === route);
+      });
+    }
+
+    function showView(route, opts) {
+      opts = opts || {};
+      if (ROUTES.indexOf(route) < 0) route = 'home';
+      document.querySelectorAll('.view').forEach(v => {
+        const on = v.getAttribute('data-view') === route;
+        v.classList.toggle('active', on);
+        if (on) {
+          v.setAttribute('aria-hidden', 'false');
+          // reset scroll of the active pane
+          try { v.scrollTop = 0; } catch (e) {}
+        } else {
+          v.setAttribute('aria-hidden', 'true');
+        }
+      });
+      setActiveNav(route);
+      if (route === 'home') {
+        document.querySelectorAll('#statsWrap [data-count]').forEach(animateCount);
+      }
+      if (opts.push !== false) {
+        const next = '#/' + route;
+        if (location.hash !== next && location.hash !== '#' + route) {
+          if (opts.replace) history.replaceState(null, '', next);
+          else location.hash = next;
+        }
+      }
+      if (window.matchMedia('(max-width: 960px)').matches) closeNav();
+    }
+
+    window.addEventListener('hashchange', () => showView(parseRoute(), { push: false }));
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      if (a.target === '_blank' || /^(https?:|mailto:)/i.test(href)) return;
+      if (href.startsWith('#/')) {
+        e.preventDefault();
+        showView(href.slice(2).split('/')[0] || 'home');
+        return;
+      }
+      if (CAT_ROUTE[href]) {
+        e.preventDefault();
+        showView(CAT_ROUTE[href]);
+      }
+    });
+
+    $('searchChip').addEventListener('click', () => showView('projects'));
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
         e.preventDefault();
-        focusProjects();
+        showView('projects');
       }
     });
 
@@ -709,8 +964,8 @@
 
     $('heroBtns').innerHTML =
       '<a class="uic-btn" href="' + esc(p.github || 'https://github.com/ibi6') + '" target="_blank" rel="noopener">' + icons.github + ' GitHub</a>' +
-      '<a class="uic-btn ghost" href="#projects">浏览项目</a>' +
-      '<a class="uic-btn ghost" href="https://ibi6.github.io/ui-components-oss/" target="_blank" rel="noopener">组件库</a>';
+      '<a class="uic-btn ghost" href="#/projects">浏览项目</a>' +
+      '<a class="uic-btn ghost" href="#/lab">组件实验室</a>';
 
     const phrases = (p.typing && p.typing.length) ? p.typing : ['开源作品'];
     let pi = 0, ci = 0, deleting = false;
@@ -731,25 +986,36 @@
     }
     tick();
 
-    $('hubGrid').innerHTML = (D.hubCategories || []).map(c =>
-      '<a class="grid-card" href="' + esc(c.href) + '">' +
-        '<h3><span class="ico">' + (c.icon || '') + '</span> ' + esc(c.title) + '</h3>' +
-        '<p>' + esc(c.desc) + '</p>' +
-        '<div class="tag-box">' +
-          '<span class="tag-link">' + esc(c.linkLabel || '进入') + jumpIcon + '</span>' +
-          (c.tags || []).map(t => '<span class="tag-hash">' + esc(t) + '</span>').join('') +
-        '</div>' +
-      '</a>'
-    ).join('');
+    // hub categories: rewrite hrefs to SPA routes
+    $('hubGrid').innerHTML = (D.hubCategories || []).map(c => {
+      let href = c.href || '#/projects';
+      if (CAT_ROUTE[href]) href = '#/' + CAT_ROUTE[href];
+      else if (href === '#projects') href = '#/projects';
+      else if (href === '#recommends') href = '#/recommends';
+      else if (!href.startsWith('#/')) href = '#/projects';
+      // Web 与组件 → lab
+      if ((c.title || '').indexOf('组件') >= 0) href = '#/lab';
+      return (
+        '<a class="grid-card" href="' + esc(href) + '">' +
+          '<h3><span class="ico">' + (c.icon || '') + '</span> ' + esc(c.title) + '</h3>' +
+          '<p>' + esc(c.desc) + '</p>' +
+          '<div class="tag-box">' +
+            '<span class="tag-link">' + esc(c.linkLabel || '进入') + jumpIcon + '</span>' +
+            (c.tags || []).map(t => '<span class="tag-hash">' + esc(t) + '</span>').join('') +
+          '</div>' +
+        '</a>'
+      );
+    }).join('');
 
-    $('aboutDesc').textContent = D.about.desc || '';
-    $('aboutText').innerHTML = (D.about.paragraphs || []).map(x => '<p>' + md(x) + '</p>').join('');
     $('statsWrap').innerHTML = (D.about.stats || []).map(s =>
       '<div class="stat">' +
         '<div class="val"><span data-count="' + s.value + '">0</span>' + esc(s.suffix || '') + '</div>' +
         '<div class="lbl">' + esc(s.label) + '</div>' +
       '</div>'
     ).join('');
+
+    $('aboutDesc').textContent = D.about.desc || '';
+    $('aboutText').innerHTML = (D.about.paragraphs || []).map(x => '<p>' + md(x) + '</p>').join('');
 
     $('skillsDesc').textContent = D.skills.desc || '';
     $('skillsGrid').innerHTML = (D.skills.groups || []).map(g =>
@@ -759,7 +1025,6 @@
       '</div>'
     ).join('');
 
-    /* projects + filter + detail drawer */
     const projectItems = D.projects.items || [];
     const FILTERS = [
       { id: 'all', label: '全部' },
@@ -805,8 +1070,7 @@
       });
       document.querySelectorAll('#projectsGrid [data-filter-item]').forEach(card => {
         const idx = Number(card.getAttribute('data-idx'));
-        const ok = matchFilter(projectItems[idx], fid);
-        card.hidden = !ok;
+        card.hidden = !matchFilter(projectItems[idx], fid);
       });
     }
     filterHost.addEventListener('click', (e) => {
@@ -893,7 +1157,7 @@
       '</div>';
 
     function animateCount(el) {
-      if (el.dataset.done) return;
+      if (!el || el.dataset.done) return;
       el.dataset.done = '1';
       const target = Number(el.getAttribute('data-count') || 0);
       const start = performance.now();
@@ -908,46 +1172,14 @@
       requestAnimationFrame(frame);
     }
 
-    const sections = ['top','categories','about','skills','projects','recommends','contact'];
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => {
-        if (en.isIntersecting) {
-          en.target.classList.add('in');
-          en.target.querySelectorAll('[data-count]').forEach(animateCount);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    setTimeout(() => {
-      document.querySelectorAll('[data-count]').forEach(el => {
-        if (!el.dataset.done) {
-          const r = el.getBoundingClientRect();
-          if (r.top < window.innerHeight && r.bottom > 0) animateCount(el);
-        }
-      });
-    }, 600);
+    if (Gallery.init) Gallery.init({ data: D });
 
-    const tabLinks = Array.from(document.querySelectorAll('#navLinks [data-tab]'));
-    const sideLinks = Array.from(document.querySelectorAll('#sidebar [data-side]'));
-    function setActive(id) {
-      const map = { categories: 'top', top: 'top' };
-      const tabId = map[id] || id;
-      tabLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + tabId));
-      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    // boot route
+    const boot = parseRoute();
+    showView(boot, { push: false, replace: true });
+    if (!location.hash || location.hash === '#') {
+      history.replaceState(null, '', '#/home');
     }
-    const spy = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible && visible.target && visible.target.id) setActive(visible.target.id);
-    }, { rootMargin: '-28% 0px -55% 0px', threshold: [0, 0.15, 0.35, 0.55, 0.75] });
-    sections.forEach(id => { const el = document.getElementById(id); if (el) spy.observe(el); });
-    tabLinks.concat(sideLinks).forEach(a => {
-      a.addEventListener('click', () => {
-        const href = a.getAttribute('href') || '';
-        if (href.startsWith('#')) setActive(href.slice(1));
-      });
-    });
   })();
   </script>
 </body>

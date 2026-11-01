@@ -26,3 +26,9 @@ python -m http.server 8080
 ln -sfn /tmp/jsdom-install/node_modules ./node_modules   # 如有
 node test-smoke.js
 ```
+
+## 结构
+
+- Hash 多视图：`#/home` `#/lab` `#/projects` `#/recommends` `#/about`
+- 组件实验室：`vendor/gallery-dynamics.*` 移植自 ui-components-oss
+- 冒烟：`node test-smoke.js`
