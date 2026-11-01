@@ -157,10 +157,12 @@
     }
 
     .shell {
+      width: 100%;
       max-width: 1280px; margin: 0 auto;
       display: grid;
       grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
       min-height: calc(100vh - var(--header-h) - var(--tabs-h));
+      box-sizing: border-box;
     }
     .sidebar {
       position: sticky;
@@ -499,10 +501,16 @@
       display: flex; flex-direction: column; min-height: 100%;
       overflow: hidden;
     }
-    .site-header, .tabs-bar { flex: none; }
+    .site-header, .tabs-bar { flex: none; width: 100%; }
+    /* flex 列里 margin:auto 会取消横向拉伸，必须给 shell 明确宽度，否则主栏被挤成 0 */
     .shell {
       flex: 1 1 auto; min-height: 0;
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto; margin-right: auto;
       overflow: hidden;
+      align-self: stretch;
+      box-sizing: border-box;
     }
     .sidebar {
       height: auto !important;
