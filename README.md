@@ -6,7 +6,7 @@
 
 ## 改内容
 
-所有文案都在 `content.js` 里，不需要碰 HTML。编辑型排版：衬线大标题 + 等宽字标注 + 纸张底色。
+所有文案都在 `content.js` 里，不需要碰 HTML。浅色极简 / macOS 感：系统字体栈 + 圆角卡片。
 
 | 想改什么 | 改哪里 |
 |---------|--------|
@@ -14,7 +14,9 @@
 | 品牌 logo、页脚署名 | `profile.brand` / `footerName` |
 | 关于我段落、数据卡（年限/项目数等） | `about` |
 | 技术标签分组（标签墙，无百分比） | `skills.groups` |
-| 邮箱、社交链接 | `contact` + `profile.email` |
+| 我的项目卡片 | `projects.items` |
+| 推荐开源 | `recommends.items` |
+| 邮箱、社交链接 | `contact` + `profile.email`（邮箱可留空） |
 | 页脚署名 | `footer.note` |
 
 改完保存，双击 `index.html` 看效果，满意后推送上线：
@@ -67,7 +69,7 @@ gh repo create <用户名>.github.io --public --source=. --remote=origin --push
 ```
 index.html      页面结构 + 样式 + 交互逻辑（一般不用改）
 content.js      全部文案内容 ★ 改内容只动这个
-test-smoke.js   jsdom 渲染冒烟测试（17 项）
+test-smoke.js   jsdom 渲染冒烟测试（含项目/推荐）
 shot.js         Playwright 截图（桌面 / 移动，需本地装 playwright-core）
 check-interaction.js  表单 / 主题 / 滚动交互验证
 docs/           设计文档
@@ -77,5 +79,5 @@ docs/           设计文档
 
 ```bash
 npm install jsdom        # 首次
-node test-smoke.js       # 17 项：内容渲染、链接、字段、页脚
+node test-smoke.js       # 内容渲染、项目/推荐、链接、页脚
 ```

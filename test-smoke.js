@@ -44,9 +44,14 @@ setTimeout(() => {
   t('数据卡 = 3 张', d.querySelectorAll('#statsWrap .stat').length === 3, d.querySelectorAll('#statsWrap .stat').length);
   t('能力卡 = 4 组', d.querySelectorAll('#skillsGrid .skill-card').length === 4, d.querySelectorAll('#skillsGrid .skill-card').length);
   t('能力标签挂载', d.querySelectorAll('#skillsGrid .thing').length >= 12, d.querySelectorAll('#skillsGrid .thing').length);
-  t('社交图标 >= 3 个', d.querySelectorAll('#socialsWrap .social').length >= 3, d.querySelectorAll('#socialsWrap .social').length);
+  t('社交图标 >= 2 个', d.querySelectorAll('#socialsWrap .social').length >= 2, d.querySelectorAll('#socialsWrap .social').length);
   t('GitHub 链接直达', Array.from(d.querySelectorAll('#socialsWrap .social')).some(a => a.getAttribute('href') === 'https://github.com/ibi6'), 'github social present');
-  t('联系邮箱显示', d.getElementById('contactEmail').textContent.trim().length > 0, d.getElementById('contactEmail').textContent.trim());
+  t('联系区含 GitHub', /github\.com\/ibi6/.test(d.getElementById('contactEmail').textContent) || /github\.com\/ibi6/.test(d.getElementById('socialsWrap').innerHTML), d.getElementById('contactEmail').textContent.trim());
+  t('无假邮箱', !/alexchen\.dev/.test(d.body.textContent), 'no alexchen');
+  t('项目卡 >= 6', d.querySelectorAll('#projectsGrid .project-card').length >= 6, d.querySelectorAll('#projectsGrid .project-card').length);
+  t('推荐项 >= 6', d.querySelectorAll('#recommendsList .rec-item').length >= 6, d.querySelectorAll('#recommendsList .rec-item').length);
+  t('导航含项目与推荐', Array.from(d.querySelectorAll('#navLinks a')).some(a => a.getAttribute('href')==='#projects') && Array.from(d.querySelectorAll('#navLinks a')).some(a => a.getAttribute('href')==='#recommends'), 'nav anchors');
+  t('敏感仓库未展示', !/gpt-plus2|adobe|flow2api|ai-register-machine|fuck-your-ai|claude-zhuce|outlook-icloud|153-tilian|fast-pay/i.test(d.getElementById('projectsGrid').textContent), 'clean featured list');
   t('页脚含姓名与年份', /Hang/.test(d.getElementById('footerWrap').textContent) && new RegExp(String(new Date().getFullYear())).test(d.getElementById('footerWrap').textContent), d.getElementById('footerWrap').textContent.trim());
   t('数字滚动挂载', d.querySelectorAll('[data-count]').length === 3, d.querySelectorAll('[data-count]').length);
 
