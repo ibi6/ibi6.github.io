@@ -882,7 +882,7 @@
 
   <script src="./vendor/ui-kit.v6.js"></script>
   <script src="./vendor/gallery-dynamics.v6.js"></script>
-  <script src="./content.v6.js"></script>
+  <script src="./content.v7.js"></script>
   <script>
   (function () {
     const D = window.PORTFOLIO_DATA;
@@ -1103,7 +1103,9 @@
       '</div>'
     ).join('');
 
-    const projectItems = D.projects.items || [];
+    const projectItems = (D.projects.items || []).filter(function (item) {
+      return String(item.visibility || 'public').toLowerCase() === 'public';
+    });
     const FILTERS = [
       { id: 'all', label: '全部' },
       { id: '桌面', label: '桌面' },
@@ -1169,7 +1171,7 @@
         bodyHtml:
           '<p style="margin:0;color:var(--uic-mute)">' + esc(item.tagline) + '</p>' +
           '<div class="drawer-tags">' + tags + '</div>' +
-          '<p class="uic-drawer-note">可见性：' + (vis === 'public' ? 'Public' : 'Private（访客可能 404）') + '</p>',
+          '<p class="uic-drawer-note">公开仓库</p>',
         footerHtml:
           (item.github ? '<a class="uic-btn" href="' + esc(item.github) + '" target="_blank" rel="noopener">GitHub</a>' : '') +
           (item.homepage ? '<a class="uic-btn ghost" href="' + esc(item.homepage) + '" target="_blank" rel="noopener">主页</a>' : '') +

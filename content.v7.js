@@ -118,64 +118,6 @@ window.PORTFOLIO_DATA = {
       }
     ]
   },
-      {
-        name: 'MatrixHunter',
-        tagline: 'Windows 桌面授权检查台，内置白名单工具引导。',
-        tags: ['桌面', '安全', 'Tauri'],
-        github: 'https://github.com/ibi6/MatrixHunter',
-        featured: true,
-        visibility: 'private'
-      },
-      {
-        name: 'cloud-host-ops-diag',
-        tagline: '云主机运维巡检与智能诊断，带前端 Demo。',
-        tags: ['运维', '诊断', 'Web'],
-        github: 'https://github.com/ibi6/cloud-host-ops-diag',
-        featured: true,
-        visibility: 'private'
-      },
-      {
-        name: 'how-it-works-cn',
-        tagline: '全中文可交互互联网与 Web 安全基本功课。',
-        tags: ['教育', '安全', '交互'],
-        github: 'https://github.com/ibi6/how-it-works-cn',
-        featured: true,
-        visibility: 'private'
-      },
-      {
-        name: 'secscan-lite',
-        tagline: '零依赖本地代码自查，开箱即用。',
-        tags: ['安全', '静态分析', 'CLI'],
-        github: 'https://github.com/ibi6/secscan-lite',
-        featured: true,
-        visibility: 'private'
-      },
-      {
-        name: 'commit-city',
-        tagline: '把 git 历史渲染成等距代码城市。',
-        tags: ['可视化', 'Git', '创意'],
-        github: 'https://github.com/ibi6/commit-city',
-        featured: true,
-        visibility: 'private'
-      },
-      {
-        name: 'signal-garden',
-        tagline: '生成式信号花园，本地可玩的视觉实验。',
-        tags: ['生成式', '视觉', '实验'],
-        github: 'https://github.com/ibi6/signal-garden',
-        featured: true,
-        visibility: 'private'
-      },
-      {
-        name: 'open-source-treasure',
-        tagline: 'OSS Radar 宝藏导航，收藏优质开源。',
-        tags: ['导航', 'OSS', '收藏'],
-        github: 'https://github.com/ibi6/open-source-treasure',
-        featured: true,
-        visibility: 'private'
-      }
-    ]
-  },
 
   /* ---------- 推荐项目 ---------- */
   recommends: {
