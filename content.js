@@ -115,7 +115,15 @@ window.PORTFOLIO_DATA = {
         homepage: 'https://ibi6.github.io/ui-components-oss/',
         featured: true,
         visibility: 'public'
-      }
+      },
+      {
+        name: 'Helix Clinic',
+        tagline: '慧医通 · 医院预约挂号与电子病历一体化平台（Spring Boot 3 / React 19）。',
+        tags: ['全栈', '医疗', 'Spring Boot'],
+        github: 'https://github.com/ibi6/helix-clinic',
+        featured: true,
+        visibility: 'public'
+      },
     ]
   },
 
