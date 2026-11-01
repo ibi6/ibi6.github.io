@@ -1,35 +1,37 @@
 /* ui-components-oss tokens + selected components (vendor copy, zero-build) */
 :root {
-  --uic-primary: #6c4dff;
-  --uic-primary-dark: #3f24d6;
-  --uic-accent: #19c3b1;
-  --uic-ink: #1b1b3a;
-  --uic-fg: #1d1f3a;
-  --uic-bg: #eef0f8;
-  --uic-panel: #ffffff;
-  --uic-line: #dcdff0;
-  --uic-mute: #6b6d8f;
-  --uic-muted: #7b7fa3;
-  --uic-hover: #eef0ff;
-  --uic-shadow: 0 14px 34px -16px rgba(40, 30, 120, .3);
+  /* 浅色：暖纸灰，不刺眼 */
+  --uic-primary: #5b6cff;
+  --uic-primary-dark: #4453d9;
+  --uic-accent: #3a9b94;
+  --uic-ink: #2a2d3a;
+  --uic-fg: #2a2d3a;
+  --uic-bg: #e8e9ef;
+  --uic-panel: #f3f3f7;
+  --uic-line: #d0d2dc;
+  --uic-mute: #6a6f80;
+  --uic-muted: #7a8090;
+  --uic-hover: #dddee8;
+  --uic-shadow: 0 12px 28px -18px rgba(20, 24, 40, .28);
   --uic-radius: 12px;
-  --uic-success: #2fb344;
-  --uic-warn: #f5a623;
-  --uic-danger: #e5484d;
+  --uic-success: #2f9e6a;
+  --uic-warn: #d4a017;
+  --uic-danger: #d64545;
 }
 :root[data-theme="dark"] {
-  --uic-primary: #8a72ff;
-  --uic-primary-dark: #6c4dff;
-  --uic-accent: #2dd4bf;
-  --uic-ink: #eceeff;
-  --uic-fg: #eceeff;
-  --uic-bg: #10102a;
-  --uic-panel: #191938;
-  --uic-line: #2b2b55;
-  --uic-mute: #9a9cc4;
-  --uic-muted: #9a9cc4;
-  --uic-hover: #22224a;
-  --uic-shadow: 0 14px 34px -16px rgba(0, 0, 0, .7);
+  /* 深色：柔和炭黑 + 低饱和紫，避免荧光 */
+  --uic-primary: #8b93ff;
+  --uic-primary-dark: #6b74e8;
+  --uic-accent: #5cb8b0;
+  --uic-ink: #e4e6ef;
+  --uic-fg: #e4e6ef;
+  --uic-bg: #12141a;
+  --uic-panel: #1a1d26;
+  --uic-line: #2c313d;
+  --uic-mute: #9aa1b2;
+  --uic-muted: #8b92a3;
+  --uic-hover: #242833;
+  --uic-shadow: 0 16px 40px -20px rgba(0, 0, 0, .65);
 }
 
 /* switch */

@@ -136,7 +136,7 @@
   border: 2px solid rgba(255,255,255,.4); display: block;
 }
 .uic-lab .days i.on {
-  background: #fff; border-color: #fff;
+  background: var(--uic-panel,#1a1d26); border-color: #fff;
   animation: uic-lab-pop .5s cubic-bezier(.34,1.56,.64,1) both;
   animation-delay: calc(var(--i) * .12s + .3s);
 }

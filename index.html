@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,7 +9,7 @@
     (function () {
       try {
         var t = localStorage.getItem('ibi6-theme');
-        if (!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        if (!t) t = 'dark';
         document.documentElement.setAttribute('data-theme', t);
       } catch (e) {}
     })();
@@ -24,7 +24,7 @@
       --primary-light: #8a72ff;
       --primary-dark: var(--uic-primary-dark);
       --accent: var(--uic-accent);
-      --marker: color-mix(in srgb, var(--uic-primary) 22%, transparent);
+      --marker: color-mix(in srgb, var(--uic-primary) 14%, transparent);
       --bg: var(--uic-panel);
       --bg-soft: var(--uic-bg);
       --bg-footer: var(--uic-bg);
@@ -369,7 +369,7 @@
       font-size: .65rem; font-weight: 600; padding: .12rem .4rem; border-radius: 999px;
       border: 1px solid var(--border);
     }
-    .badge.public { color: #137333; background: #e6f4ea; border-color: #ceead6; }
+    .badge.public { color: #1f6b45; background: #dfece5; border-color: #c5d9cc; }
     .badge.private { color: var(--fg-light); background: var(--bg-soft); }
     [data-theme="dark"] .badge.public { color: #81c995; background: #16351f; border-color: #274e32; }
     .project-card p { margin: 0; font-size: .78rem; color: var(--fg-light); flex: 1; line-height: 1.45; }
@@ -852,7 +852,7 @@
       root.setAttribute('data-theme', mode);
       lsSet('ibi6-theme', mode);
     }
-    const initialTheme = root.getAttribute('data-theme') || 'light';
+    const initialTheme = root.getAttribute('data-theme') || 'dark';
     applyTheme(initialTheme);
 
     if (UIC.Switch) {
