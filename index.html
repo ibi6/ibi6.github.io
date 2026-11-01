@@ -10,8 +10,8 @@
   <script>
     (function () {
       try {
-        if (localStorage.getItem('ibi6-theme-ver') !== 'tone-5') {
-          localStorage.setItem('ibi6-theme-ver', 'tone-5');
+        if (localStorage.getItem('ibi6-theme-ver') !== 'tone-6') {
+          localStorage.setItem('ibi6-theme-ver', 'tone-6');
           localStorage.setItem('ibi6-theme', 'light');
         }
         var mode = localStorage.getItem('ibi6-theme') || 'light';
@@ -24,13 +24,13 @@
   <style id="critical-theme">
     html, body { background: #f3f3f7 !important; color: #2a2d3a; }
     html[data-theme="dark"], html[data-theme="dark"] body {
-      background: #12141a !important; color: #e4e6ef;
+      background: #16171c !important; color: #f2f2f7;
     }
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" />
-  <link rel="stylesheet" href="./vendor/ui-kit.v5.css" />
-  <link rel="stylesheet" href="./vendor/gallery-dynamics.v5.css" />
+  <link rel="stylesheet" href="./vendor/ui-kit.v6.css" />
+  <link rel="stylesheet" href="./vendor/gallery-dynamics.v6.css" />
   <style>
     :root {
       --primary: var(--uic-primary);
@@ -384,18 +384,63 @@
     }
     .badge.public { color: #1f6b45; background: #dfece5; border-color: #c5d9cc; }
     .badge.private { color: var(--fg-light); background: var(--bg-soft); }
-    [data-theme="dark"] .badge.public { color: #81c995; background: #16351f; border-color: #274e32; }
+    [data-theme="dark"] {
+      /* page canvas deeper; elevated surfaces use --uic-panel */
+      --bg: var(--uic-bg);
+      --bg-soft: #1c1d24;
+      --bg-footer: #12131a;
+      --primary-light: #c4caff;
+      --shadow-hover: 0 14px 32px -14px rgba(165, 173, 255, .28);
+      --marker: color-mix(in srgb, var(--uic-primary) 28%, transparent);
+    }
+    [data-theme="dark"] .badge.public {
+      color: #8fd5a4; background: #1a2e22; border-color: #2c4a36;
+    }
     [data-theme="dark"] .hero-wrapper {
-      background-image: radial-gradient(rgba(255,255,255,.045) 1.15px, transparent 1.15px);
+      background-color: var(--uic-panel);
+      background-image: radial-gradient(rgba(255,255,255,.055) 1.1px, transparent 1.1px);
+      border-color: color-mix(in srgb, var(--uic-line) 85%, transparent);
+      box-shadow: 0 16px 40px -22px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05);
     }
-    [data-theme="dark"] .site-header,
+    [data-theme="dark"] .site-header {
+      background: color-mix(in srgb, var(--uic-bg) 72%, transparent);
+      border-bottom-color: rgba(255,255,255,.06);
+    }
     [data-theme="dark"] .tabs-bar {
-      background: color-mix(in srgb, var(--bg) 78%, #000);
-      border-color: color-mix(in srgb, var(--line) 70%, transparent);
+      background: color-mix(in srgb, var(--uic-bg) 78%, transparent);
+      border-bottom-color: rgba(255,255,255,.06);
     }
-    [data-theme="dark"] .card,
-    [data-theme="dark"] .panel {
-      box-shadow: 0 10px 28px -18px rgba(0,0,0,.55);
+    [data-theme="dark"] .sidebar {
+      background: var(--uic-bg);
+      border-right-color: rgba(255,255,255,.06);
+    }
+    [data-theme="dark"] .main {
+      background: var(--uic-bg);
+    }
+    [data-theme="dark"] .grid-card,
+    [data-theme="dark"] .project-card,
+    [data-theme="dark"] .skill-card,
+    [data-theme="dark"] .rec-list,
+    [data-theme="dark"] .panel,
+    [data-theme="dark"] .card {
+      background: var(--uic-panel);
+      border-color: rgba(255,255,255,.07);
+      box-shadow: 0 12px 28px -18px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    [data-theme="dark"] .grid-card {
+      box-shadow: 0 12px 28px -18px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    [data-theme="dark"] .avatar-glow {
+      box-shadow: 0 14px 36px -12px rgba(165, 173, 255, .35);
+    }
+    [data-theme="dark"] .search-chip,
+    [data-theme="dark"] .gh-source {
+      background: color-mix(in srgb, var(--uic-panel) 88%, #000);
+      border-color: rgba(255,255,255,.08);
+    }
+    [data-theme="dark"] .site-footer {
+      background: var(--bg-footer);
+      border-top-color: rgba(255,255,255,.06);
     }
     .project-card p { margin: 0; font-size: .78rem; color: var(--fg-light); flex: 1; line-height: 1.45; }
     .project-card .things .thing { font-size: .65rem; padding: .1rem .38rem; }
@@ -835,9 +880,9 @@
   </div>
 
 
-  <script src="./vendor/ui-kit.v5.js"></script>
-  <script src="./vendor/gallery-dynamics.v5.js"></script>
-  <script src="./content.v5.js"></script>
+  <script src="./vendor/ui-kit.v6.js"></script>
+  <script src="./vendor/gallery-dynamics.v6.js"></script>
+  <script src="./content.v6.js"></script>
   <script>
   (function () {
     const D = window.PORTFOLIO_DATA;

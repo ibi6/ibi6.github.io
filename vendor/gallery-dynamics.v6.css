@@ -1,0 +1,395 @@
+/* =========================================================
+ * gallery-dynamics.css
+ * 精简移植自 ui-components-oss/css/style.css
+ * （倾斜光斑 / 流体按钮 / 弹性开关 / 滑动标签 / 跑马灯 / 实验室抽屉壳）
+ * 全部挂在 .uic-lab 下，避免污染站点顶栏 .tabs-* 等选择器。
+ * ========================================================= */
+
+.uic-lab {
+  --v: var(--uic-primary, #6c4dff);
+  --vd: var(--uic-primary-dark, #3f24d6);
+  --a: var(--uic-accent, #19c3b1);
+  --y: #ffc64d;
+  --ink: var(--uic-ink, #1b1b3a);
+  --mute: var(--uic-mute, #6b6d8f);
+  --line: var(--uic-line, #dcdff0);
+  --panel: var(--uic-panel, #fff);
+  --bg: var(--uic-bg, #eef0f8);
+  --shadow: var(--uic-shadow, 0 14px 34px -16px rgba(40,30,120,.3));
+}
+
+.uic-lab-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-bottom: .55rem;
+}
+.uic-lab-head h2 { margin: 0; font-size: 1.25rem; font-weight: 700; }
+.uic-lab-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  padding: .2rem .55rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--uic-primary) 14%, transparent);
+  color: var(--uic-primary); border: 1px solid color-mix(in srgb, var(--uic-primary) 28%, transparent);
+}
+.uic-lab-desc { margin: 0 0 1rem; color: var(--mute); font-size: .9rem; }
+.uic-lab-desc a { font-weight: 600; }
+
+.uic-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 720px) {
+  .uic-lab-grid { grid-template-columns: 1fr; }
+}
+
+.uic-lab .box {
+  background: linear-gradient(180deg, rgba(255,255,255,.35), transparent 90px), var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-radius: 18px;
+  min-height: 0;
+}
+:root[data-theme="dark"] .uic-lab .box {
+  background: linear-gradient(180deg, rgba(255,255,255,.055), transparent 100px), var(--panel);
+  box-shadow: 0 12px 32px -20px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.uic-lab .box.wide { grid-column: 1 / -1; }
+.uic-lab .box h3 {
+  margin: 0;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--mute);
+  letter-spacing: .02em;
+}
+.uic-lab .hint {
+  margin: 0;
+  font-size: .78rem;
+  color: var(--mute);
+  line-height: 1.45;
+}
+.uic-lab .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ---- 倾斜光斑卡片（来自 ui-components-oss .tilt） ---- */
+.uic-lab .stage {
+  perspective: 900px;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+}
+.uic-lab .tilt {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  min-height: 210px;
+  border-radius: 24px;
+  background: radial-gradient(120% 90% at 18% 0%, rgba(255,255,255,.1), transparent 46%), #1c1550;
+  color: #fff;
+  padding: 22px;
+  overflow: hidden;
+  transition: transform .18s ease-out;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 28px 60px -30px rgba(28,21,80,.65), inset 0 1px 0 rgba(255,255,255,.14);
+  touch-action: none;
+}
+.uic-lab .blob {
+  position: absolute;
+  width: 170px; height: 170px;
+  border-radius: 50%;
+  filter: blur(34px);
+  opacity: .75;
+  animation: uic-lab-drift 9s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.uic-lab .b1 { background: #6c4dff; left: -40px; top: -50px; }
+.uic-lab .b2 { background: #19c3b1; right: -50px; bottom: -60px; animation-delay: -3s; }
+.uic-lab .b3 {
+  background: #ffc64d; width: 110px; height: 110px;
+  left: 45%; top: 30%; animation-delay: -6s; opacity: .5;
+}
+@keyframes uic-lab-drift { to { transform: translate(70px, 50px) scale(1.2); } }
+.uic-lab .glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.28), transparent 70%);
+  pointer-events: none;
+}
+.uic-lab .tilt > *:not(.blob):not(.glow) { position: relative; }
+.uic-lab .tilt .tilt-title { margin: 0 0 6px; font-size: 1.55rem; letter-spacing: .03em; font-weight: 700; }
+.uic-lab .tilt .tilt-desc { margin: 0; opacity: .85; max-width: 32ch; font-size: .9rem; }
+.uic-lab .days { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
+.uic-lab .days i {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.4); display: block;
+}
+.uic-lab .days i.on {
+  background: var(--uic-panel,#1a1d26); border-color: #fff;
+  animation: uic-lab-pop .5s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--i) * .12s + .3s);
+}
+@keyframes uic-lab-pop { from { transform: scale(0); } }
+.uic-lab .days span { margin-left: auto; font-size: .8rem; opacity: .9; }
+
+/* ---- 流体按钮 + 涟漪 ---- */
+.uic-lab .btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--v);
+  border-radius: 999px;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0) 58%), var(--v);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  font-size: .86rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 1px 2px rgba(24,20,70,.14), 0 10px 22px -10px var(--vd);
+  transition: color .3s, transform .15s, box-shadow .3s;
+}
+.uic-lab .btn:hover {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 1px 2px rgba(24,20,70,.14), 0 14px 28px -10px var(--vd);
+}
+.uic-lab .btn:active { transform: scale(.95); }
+.uic-lab .btn::before {
+  content: "";
+  position: absolute;
+  left: var(--cx, 50%); top: var(--cy, 50%);
+  width: 0; height: 0; border-radius: 50%;
+  background: var(--vd);
+  transform: translate(-50%, -50%);
+  transition: width .55s ease, height .55s ease;
+  z-index: -1;
+}
+.uic-lab .btn:hover::before { width: 420px; height: 420px; }
+.uic-lab .btn.ghost {
+  background: linear-gradient(180deg, rgba(108,77,255,.07), rgba(108,77,255,.02));
+  color: var(--v);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 1px 2px rgba(24,20,70,.1);
+}
+.uic-lab .btn.ghost::before { background: var(--v); }
+.uic-lab .btn.ghost:hover { color: #fff; }
+.uic-lab .rip {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.55);
+  width: 12px; height: 12px;
+  transform: translate(-50%, -50%) scale(0);
+  animation: uic-lab-rip .6s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes uic-lab-rip { to { transform: translate(-50%, -50%) scale(24); opacity: 0; } }
+.uic-lab .btn .sp,
+.uic-lab .btn .ck { display: none; vertical-align: -3px; margin-right: 6px; }
+.uic-lab .btn .sp {
+  width: 16px; height: 16px;
+  border: 2.5px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: uic-lab-spin .7s linear infinite;
+}
+.uic-lab .btn.busy .sp { display: inline-block; }
+.uic-lab .btn.done .ck { display: inline-block; }
+.uic-lab .btn.done {
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0) 58%), #15a37b;
+  border-color: #15a37b;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 10px 22px -10px #0b6e52;
+}
+@keyframes uic-lab-spin { to { transform: rotate(360deg); } }
+
+/* ---- 弹性开关 ---- */
+.uic-lab .sw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.uic-lab .sw input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.uic-lab .trk {
+  width: 52px; height: 30px; border-radius: 99px;
+  background: var(--line);
+  position: relative;
+  flex: none;
+  transition: background .3s;
+  box-shadow: inset 0 2px 4px rgba(24,20,70,.16);
+}
+.uic-lab .trk::after {
+  content: "";
+  position: absolute; left: 4px; top: 4px;
+  width: 22px; height: 22px; border-radius: 99px;
+  background: linear-gradient(180deg, #fff, #f2f3ff);
+  box-shadow: 0 1px 2px rgba(24,20,70,.2), 0 4px 10px -2px rgba(24,20,70,.25);
+  transition: transform .45s cubic-bezier(.34,1.56,.64,1), width .2s;
+}
+.uic-lab .sw input:checked + .trk {
+  background: linear-gradient(180deg, var(--v), var(--vd));
+  box-shadow: inset 0 2px 4px rgba(24,20,70,.18), 0 6px 14px -6px var(--v);
+}
+.uic-lab .sw input:checked + .trk::after { transform: translateX(22px); }
+.uic-lab .sw:active .trk::after { width: 28px; }
+.uic-lab .sw input:checked:active + .trk::after { transform: translateX(16px); }
+.uic-lab .sw input:focus-visible + .trk { outline: 3px solid var(--a); outline-offset: 3px; }
+.uic-lab .sw-stack { display: flex; flex-direction: column; gap: 12px; }
+
+/* ---- 滑动标签页 ---- */
+.uic-lab .lab-tabs {
+  position: relative;
+  display: flex;
+  background: var(--bg);
+  border-radius: 99px;
+  padding: 4px;
+  align-self: flex-start;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line) 80%, transparent);
+}
+.uic-lab .lab-tabs button {
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: none;
+  padding: 8px 16px;
+  border-radius: 99px;
+  color: var(--mute);
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color .25s;
+}
+.uic-lab .lab-tabs button[aria-selected="true"] { color: #fff; }
+.uic-lab .ind {
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  border-radius: 99px;
+  background: var(--v);
+  transition: transform .45s cubic-bezier(.34,1.3,.64,1), width .45s cubic-bezier(.34,1.3,.64,1);
+  pointer-events: none;
+}
+.uic-lab .pane {
+  margin: 0;
+  min-height: 48px;
+  font-size: .88rem;
+  color: var(--ink);
+  animation: uic-lab-fade .35s ease;
+}
+@keyframes uic-lab-fade {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+/* ---- 跑马灯 ---- */
+.uic-lab .mq {
+  overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.uic-lab .mq > div {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  animation: uic-lab-mq 18s linear infinite;
+}
+.uic-lab .mq:hover > div { animation-play-state: paused; }
+.uic-lab .mq span {
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: var(--bg);
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  white-space: nowrap;
+  font-size: .8rem;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(24,20,70,.06);
+}
+@keyframes uic-lab-mq { to { transform: translateX(-50%); } }
+
+/* ---- 实验室内嵌抽屉（演示用，与 UIC.Drawer 并存） ---- */
+.uic-lab-drawer-mask {
+  position: fixed; inset: 0; z-index: 150;
+  background: rgba(10,8,40,.48);
+  backdrop-filter: blur(5px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .28s ease;
+}
+.uic-lab-drawer-mask.on { opacity: 1; pointer-events: auto; }
+.uic-lab-drawer-mask[hidden] { display: none !important; }
+.uic-lab-drawer {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  width: min(340px, 88vw);
+  background: var(--uic-panel, #fff);
+  color: var(--uic-ink, #1b1b3a);
+  box-shadow: 0 24px 80px -20px rgba(10,8,40,.55), inset 0 1px 0 rgba(255,255,255,.3);
+  display: flex; flex-direction: column;
+  transform: translateX(-104%);
+  transition: transform .34s cubic-bezier(.22,1,.36,1);
+}
+.uic-lab-drawer-mask.right .uic-lab-drawer {
+  left: auto; right: 0; transform: translateX(104%);
+}
+.uic-lab-drawer-mask.on .uic-lab-drawer { transform: none; }
+.uic-lab-drawer-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 18px 12px; border-bottom: 1px solid var(--uic-line, #dcdff0);
+}
+.uic-lab-drawer-hd h3 { margin: 0; font-size: 16px; }
+.uic-lab-drawer-x {
+  width: 34px; height: 34px;
+  border: 1px solid var(--uic-line, #dcdff0);
+  border-radius: 10px;
+  background: var(--uic-bg, #eef0f8);
+  font-size: 20px; line-height: 1;
+  color: var(--uic-mute, #6b6d8f);
+  cursor: pointer;
+}
+.uic-lab-drawer-x:hover { color: var(--uic-ink); border-color: var(--uic-primary); }
+.uic-lab-drawer-bd {
+  padding: 18px; display: flex; flex-direction: column; gap: 12px;
+  overflow: auto; flex: 1;
+}
+.uic-lab-drawer-note { margin: 8px 0 0; font-size: 12.5px; color: var(--uic-mute); }
+.uic-lab-drawer-ft {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 14px 18px 18px; border-top: 1px solid var(--uic-line, #dcdff0);
+}
+.uic-lab-drawer-ft .btn { font-size: .82rem; padding: 8px 16px; }
+
+/* ---- 项目卡轻 tilt（站点级，不挂 .uic-lab） ---- */
+.project-card.tilt-lite {
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+.project-card.tilt-lite::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 0%), rgba(108,77,255,.16), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.project-card.tilt-lite:hover::after,
+.project-card.tilt-lite.is-tilting::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .uic-lab .blob,
+  .uic-lab .mq > div,
+  .uic-lab .days i.on,
+  .uic-lab .btn::before,
+  .uic-lab .rip { animation: none !important; transition: none !important; }
+  .uic-lab .tilt,
+  .project-card.tilt-lite { transform: none !important; }
+}
