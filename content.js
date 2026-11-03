@@ -108,6 +108,15 @@ window.PORTFOLIO_DATA = {
     desc: '只展示公开仓库；私有项目不会出现在这里。',
     items: [
       {
+        name: '智能楼宇全光网架',
+        tagline: '毕设演示 · POL 智能楼宇全光网管（拓扑 / 设备 / 高密度接入 / 方案测算）。',
+        tags: ['毕设', 'Vue', '全光网'],
+        github: 'https://github.com/ibi6/smart-building-pol',
+        homepage: 'https://ibi6.github.io/smart-building-pol/',
+        featured: true,
+        visibility: 'public'
+      },
+      {
         name: 'ui-components-oss',
         tagline: '纯前端动态 UI 组件集，零依赖可预览。',
         tags: ['UI', '前端', '组件'],
