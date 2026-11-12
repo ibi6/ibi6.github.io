@@ -1,0 +1,7 @@
+{
+  "username": "ibi6",
+  "excludeForks": true,
+  "excludeArchived": true,
+  "exclude": ["ibi6"],
+  "featured": ["ui-components-oss", "helix-clinic", "smart-building-pol", "netinspect", "video-vault", "ibi6.github.io"]
+}
