@@ -2,3 +2,7 @@ node_modules/
 package-lock.json
 .DS_Store
 Thumbs.db
+
+# Portfolio build output
+dist/
+*.pending
