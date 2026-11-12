@@ -1,33 +1,23 @@
-# 写笔记
+# 站主写作说明
 
-最方便的方式：打开网站「笔记」→「新建笔记」，填标题与正文，点击「去 GitHub 发布」。GitHub 编辑页会自动填好文件名和内容，你只需登录自己的账号，确认后点击 **Commit changes**，选择提交到 main。网站随后自动构建发布，可在仓库 Actions 中查看进度。
+公开网站只提供阅读，不提供访客投稿或写作表单。发布权限由 GitHub 的仓库写权限控制；没有写权限的访客不能直接发布文章。
 
-- 草稿自动保存在当前浏览器，不是已发布内容，也不会跨设备同步。
-- 长文会下载 Markdown：在「管理已发布笔记」中选择 Add file → Upload files 上传。
-- 编辑或删除已发布笔记：点「管理已发布笔记」，选择文件，再编辑或删除并提交。
-- 私有草稿不要提交到公开仓库：提交后的笔记会公开。
+## 新建
 
-也可以直接在 GitHub 的 notes/ 目录新建任何 `.md` 文件。普通 Markdown 就可以，不强制写配置：
+打开 https://github.com/ibi6/ibi6.github.io/tree/main/notes ，用你自己的账号登录。
 
-```markdown
-# 我的标题
+1. 点 Add file → Create new file。
+2. 文件名填 `YYYY-MM-DD-标题.md`，正文写普通 Markdown（第一行 `# 标题`）。
+3. 点 Commit changes，提交到 main。GitHub Actions 会自动打包和发布。
 
-正文从这里开始。
-```
+也可以上传本地 `.md` 文件：Add file → Upload files。
 
-标题取第一行一级标题；日期优先使用文件名开头的 YYYY-MM-DD，其次使用 Git 最近提交日期；摘要自动从正文提取。README.md 不会被作为笔记发布。
+## 修改和删除
 
-如需指定标签、日期和摘要，可加文件头（网站写作入口会自动生成）：
+在 notes/ 中打开原文件，再编辑或删除并提交。网站会同步更新。
 
-```markdown
----
-title: 我的标题
-date: 2026-11-12
-tags: 开发, 随记
-summary: 一句话摘要
----
+## 标签与摘要（可选）
 
-正文。
-```
+文件头可加 title、date、tags、summary；不写也可以，标题取一级标题，日期取文件名日期或最后提交日期，摘要自动提取。
 
-本地预览笔记修改后运行 `node build-notes.mjs`。GitHub 上直接提交则不需手工运行。
+README.md 不会被当作文章发布。本地修改后运行 `node build-notes.mjs` 预览。

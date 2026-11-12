@@ -195,8 +195,9 @@
   };
   const genericArt = () => `<g class="draw" ${S}><rect x="60" y="34" width="200" height="112" rx="14"/><line x1="84" y1="70" x2="200" y2="70" style="--t:.3s"/><line x1="84" y1="94" x2="236" y2="94" style="--t:.4s"/></g>`;
 
+  window.renderProjectArtwork = name => (ART[name] || genericArt)();
   const projList = $('#projList'), projView = $('#projView');
-  $('#projSub').textContent = `${D.repos.length} 个公开仓库 · 鼠标滑过切换`;
+  $('#projSub').textContent = `${D.repos.length} 个公开仓库 · 点击切换精选`;
   let curProj = -1, hoverLock = 0;   // 命令面板跳转后短暂忽略悬停，免得滚动时鼠标碰巧压到别的行
   function showProj(i) {
     if (i === curProj) return;
@@ -208,7 +209,7 @@
       `<i title="${esc(n)} ${(v / tot * 100).toFixed(1)}%" style="width:${v / tot * 100}%;background:${langColor(n)};animation-delay:${k * 0.08}s"></i>`).join('') : '';
     const top = tot ? Object.entries(r.langs).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([n]) => n).join(' · ') : '';
     projView.innerHTML = `<div class="pv-art"><svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${(ART[r.name] || genericArt)()}</svg></div>
-      <div class="pv-body pv-in"><h3>${esc(r.name)}</h3><p>${esc(r.desc)}</p>
+      <div class="pv-body pv-in"><span class="project-kicker">FEATURED PROJECT / 精选项目</span><h3>${esc(r.name)}</h3><p>${esc(r.desc)}</p>
       ${bar ? `<div class="pv-bar">${bar}</div>` : ''}
       <div class="pv-meta">${top ? `<span>${esc(top)}</span>` : ''}<span>★ <b>${r.stars}</b></span><span>分叉 <b>${r.forks}</b></span><span>最近推送 <b>${esc(r.pushed)}</b></span></div>
       <div class="pv-links"><a href="${esc(r.url)}" target="_blank" rel="noopener">源码 ↗</a>${r.home ? `<a href="${esc(r.home)}" target="_blank" rel="noopener">在线演示 ↗</a>` : ''}</div></div>`;
@@ -218,7 +219,7 @@
       <n>${String(i + 1).padStart(2, '0')}</n><h3>${esc(r.name)}</h3><em>${esc(r.lang || '—')}${r.stars ? ` · ★ ${r.stars}` : ''}</em></button></li>`).join('');
     $$('.proj', projList).forEach(b => {
       const i = +b.dataset.i;
-      b.addEventListener('pointerenter', () => { if (performance.now() > hoverLock) showProj(i); });
+      // Selection changes only on explicit click or keyboard focus.
       b.addEventListener('focus', () => showProj(i));
       b.addEventListener('click', () => {
         showProj(i);
